@@ -1,0 +1,11 @@
+spring:
+  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:p6spy:mysql://10.186.61.54:4200,10.186.61.54:4200,10.186.61.54:4200/TiDBdemo?useConfigs=clusterBase&secondsBeforeRetryMaster=20&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启SQL语句打印
