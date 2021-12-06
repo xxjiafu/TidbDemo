@@ -1,11 +1,22 @@
 spring:
   datasource:
 #    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:p6spy:mysql://10.186.61.54:4200,10.186.61.54:4200,10.186.61.54:4200/TiDBdemo?useConfigs=clusterBase&secondsBeforeRetryMaster=20&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:p6spy:mysql:loadbalance://10.186.61.54:4200,10.186.61.79:4200,10.186.61.80:4200/TiDBdemo?roundRobinLoadBalance=true&failOverReadOnly=false&tcpRcvBuf=1024000&loadBalanceStrategy=bestResponseTime&loadBalanceBlacklistTimeout=300000&loadBalancePingTimeout=1000&selfDestructOnPingMaxOperations=200&queryTimeoutKillsConnection=true&loadBalanceValidateConnectionOnSwapServer=true&connectTimeout=1000&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+      #druid连接池配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      ## 配置获取连接等待超时的时间
+      maxWait: 60000
+
 
 mybatis-plus:
+  mapper-locations:
+    - /mappers/*
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启SQL语句打印
