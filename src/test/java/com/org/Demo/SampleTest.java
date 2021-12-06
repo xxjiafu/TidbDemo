@@ -1,6 +1,8 @@
 package com.org.Demo;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.org.Demo.mp.mappers.UserMapper;
 import com.org.Demo.mp.po.User;
 
@@ -20,8 +22,8 @@ import static org.junit.Assert.*;
  * @date 2021/11/27 20:53
  */
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class SampleTest {
     @Autowired
     private UserMapper userMapper;
@@ -71,7 +73,7 @@ public class SampleTest {
         users.forEach(System.out::println);
     }
 
-
+//allEq
     @Test
     public void test6() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
@@ -93,4 +95,31 @@ public class SampleTest {
         List<User> users = userMapper.selectList(wrapper);
         users.forEach(System.out::println);
     }
+
+
+    @Test
+    public void test8() {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.like("name", "黄");
+
+        Integer count = userMapper.selectCount(wrapper);
+        System.out.println(count);
+    }
+
+    @Test
+    public void testLambda1() {
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(User::getName, "黄").lt(User::getAge, 30);
+        List<User> users = userMapper.selectList(wrapper);
+        users.forEach(System.out::println);
+    }
+
+    @Test
+    public void testLambda2() {
+        LambdaQueryChainWrapper<User> chainWrapper = new LambdaQueryChainWrapper<>(userMapper);
+        List<User> users = chainWrapper.like(User::getName, "黄").gt(User::getAge, 30).list();
+        users.forEach(System.out::println);
+    }
+
+
 }

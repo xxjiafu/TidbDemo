@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021/11/27 16:23
  */
 @SpringBootApplication
-@MapperScan("com.org.Demo")
+@MapperScan("com.org.Demo.mp.mappers")
 public class TiDBDemo {
 
     public static void main(String[] args) {
